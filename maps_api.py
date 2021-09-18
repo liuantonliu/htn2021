@@ -12,12 +12,17 @@ radius = 1000
 destination_type = "restaurant"
 address = "280 Lester St., Waterloo, ON"
 
-#given an address, convert to lat/long
+# Given an address, convert to lat/long
+# returns a dictionary of {"lat": latidude, "lng": longitude}
 def geocode_address(address):
     urllib.parse.quote(address)
     url = "https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key="+API_KEY
     file = url_query(url)
-    return file
+    
+    #only works with one return result for now, no error handling
+    location = file["results"][0]["geometry"]["location"]
+
+    return location
 
 # given a url, return json file
 def url_query(url):
