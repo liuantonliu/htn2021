@@ -27,6 +27,18 @@ def get_locations():
     except Exception as e:
         return jsonify({"error": e}), 400
 
+@app.route('/get_duration', methods=['GET'])
+def get_duration():
+    try:
+        req = json.loads(request.data.decode(encoding='UTF-8'))
+        start_time, start_location, end_location = req["start_time"], req["start_location"], req["end_location"]
+
+        duration = get_time(start_location, end_location, dept_time="start_time")
+
+        return jsonify({"results": duration}), 200
+    except Exception as e:
+        return jsonify({"error": e}), 400
+
 
 @app.errorhandler(500)
 def server_error(e):
