@@ -12,7 +12,6 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     """Return a friendly HTTP greeting."""
-    # return f"the api key is {os.environ.get('GOOGLE_API_KEY')}"
     return "Goodbye world"
 
 @app.route('/get_locations', methods=['GET'])
@@ -42,5 +41,3 @@ if __name__ == '__main__':
     # application on Google App Engine. See entrypoint in app.yaml.
     app.run(host='127.0.0.1', port=8080, debug=True)
 # [END gae_flex_quickstart]
-
-#  start time, lcoation, end time, location, food?
