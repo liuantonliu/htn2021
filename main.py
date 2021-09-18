@@ -18,12 +18,11 @@ def hello():
 def get_locations():
     try:
         req = json.loads(request.data.decode(encoding='UTF-8'))
-        print("well it started")
-        print("start time:" + str(start_time))
+
         start_time, start_location, end_time, end_location, location_type = req["start_time"], req["start_location"], req["end_time"], req["end_location"], req["location_type"]
 
-        locationsList = list_locations(start_location, location_type)
-        print("omg it worked?")
+        locationsList = list_locations(start_location, location_type, start_time)
+
         return jsonify({"results": locationsList}), 200
     except Exception as e:
         return jsonify({"error": e}), 400
@@ -33,10 +32,9 @@ def get_duration():
     try:
         req = json.loads(request.data.decode(encoding='UTF-8'))
         start_time, start_location, end_location = req["start_time"], req["start_location"], req["end_location"]
-        print("well it started")
-        print("start time:")
+
         duration = get_time(start_location, end_location, dept_time="start_time")
-        print("omg it worked?")
+
 
         return jsonify({"results": duration}), 200
     except Exception as e:

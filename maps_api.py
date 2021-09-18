@@ -34,7 +34,7 @@ def url_query(url):
     
     return file
 
-def list_locations(location, destination_type, start_time="now", radius=RADIUS, API_KEY=API_KEY):
+def list_locations(location, destination_type, start_time, radius=RADIUS, API_KEY=API_KEY):
     final_data = []
     if destination_type == "restaurant":
         final_data = query_locations(location,destination_type, radius, API_KEY)
@@ -45,7 +45,7 @@ def list_locations(location, destination_type, start_time="now", radius=RADIUS, 
     
     for result in final_data:
         end_location = "place_id:"+result["place_id"]
-        result["travel_info"] = get_time(location, end_location)
+        result["travel_info"] = get_time(location, end_location,dept_time=start_time)
 
     return final_data
 
