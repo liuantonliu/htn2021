@@ -7,9 +7,6 @@ API_KEY = "AIzaSyCDheL3PDqX-t0V1O1W9YWFN7ygpdDH8bk"
 RADIUS = 10000
 #latitude, longitude
 location = "43.47559912784776, -80.53574397301112"
-
-#radius in meters
-radius = 1000 
 destination_type = "restaurant"
 address = "280 Lester St., Waterloo, ON"
 
@@ -39,8 +36,10 @@ def url_query(url):
 
 def list_locations(location, destination_type, radius=RADIUS, API_KEY=API_KEY):
     final_data = []
-    if destination_type != "restaurant":
+    if destination_type == "restaurant":
+        print("restaurant boiisss")
         final_data = query_locations(location,destination_type, radius, API_KEY)
+        print("results obtained")
     else:
         final_data += query_locations(location, "activity", radius, API_KEY)
         final_data += query_locations(location, "shop", radius, API_KEY)
@@ -50,6 +49,8 @@ def list_locations(location, destination_type, radius=RADIUS, API_KEY=API_KEY):
 
 #returns list of nearby locations based on location (lat,lng), radius (m), destination type
 def query_locations(location, destination_type, radius=RADIUS, API_KEY=API_KEY):
+    location = geocode_address(location)
+    location = str(location["lat"])+", "+str(location["lng"])
     next_page = True
     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+location+"&radius="+str(radius)+"&keyword="+str(destination_type)+"&key="+API_KEY
     final_data = []
@@ -68,9 +69,9 @@ def query_locations(location, destination_type, radius=RADIUS, API_KEY=API_KEY):
     
     return final_data
 
-def get_route(start_loc, end_loc, mode="DRIVING", dept_time="now", API_KEY=API_KEY):
+def get_time(start_loc, end_loc, mode="DRIVING", dept_time="now", API_KEY=API_KEY):
     """
-    Initializes start and end locations, total trip time, and array corresponding to the order of locations.
+    Get good. Get travel times.
 
     start_loc: str
         Full starting address in a string seperated by commas. e.g. 280 Lester St., Waterloo, ON
