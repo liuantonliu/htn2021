@@ -37,7 +37,9 @@ def url_query(url):
 def list_locations(location, destination_type, radius=RADIUS, API_KEY=API_KEY):
     final_data = []
     if destination_type == "restaurant":
+        print("restaurant boiisss")
         final_data = query_locations(location,destination_type, radius, API_KEY)
+        print("results obtained")
     else:
         final_data += query_locations(location, "activity", radius, API_KEY)
         final_data += query_locations(location, "shop", radius, API_KEY)
