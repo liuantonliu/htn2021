@@ -17,8 +17,13 @@ def hello():
 @app.route('/get_locations', methods=['GET'])
 def get_locations():
     try:
-        req = json.loads(request.data.decode(encoding='UTF-8'))
-        start_time, start_location, end_time, end_location, location_type = req["start_time"], req["start_location"], req["end_time"], req["end_location"], req["location_type"]
+        print("#######################################")
+        start_time = json.loads(request.args.get("start_time").lower())
+        start_location = json.loads(request.args.get("start_location").lower())
+        end_time = json.loads(request.args.get("end_time").lower())
+        end_location = json.loads(request.args.get("end_location").lower())
+        location_type = json.loads(request.args.get("location_type").lower())
+        print(start_time, start_location, end_time, end_location, location_type)
 
         locationsList = list_locations(start_location, location_type)
 
