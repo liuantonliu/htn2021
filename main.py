@@ -17,6 +17,7 @@ def hello():
 @app.route('/get_locations', methods=['GET'])
 def get_locations():
     try:
+
         print("#######################################")
         print(request.args)
         start_time = request.args.get("start_time").lower()
@@ -24,10 +25,9 @@ def get_locations():
         end_time = request.args.get("end_time").lower()
         end_location = request.args.get("end_location").lower()
         location_type = request.args.get("location_type").lower()
-        print(start_time, start_location, end_time, end_location, location_type)
 
-        locationsList = list_locations(start_location, location_type)
-        print("omg it worked?")
+        locationsList = list_locations(start_location, location_type, start_time)
+
         return jsonify({"results": locationsList}), 200
     except Exception as e:
         return jsonify({"error": e}), 400
@@ -37,10 +37,9 @@ def get_duration():
     try:
         req = json.loads(request.data.decode(encoding='UTF-8'))
         start_time, start_location, end_location = req["start_time"], req["start_location"], req["end_location"]
-        print("well it started")
-        print("start time:")
+
         duration = get_time(start_location, end_location, dept_time="start_time")
-        print("omg it worked?")
+
 
         return jsonify({"results": duration}), 200
     except Exception as e:

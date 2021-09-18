@@ -34,16 +34,18 @@ def url_query(url):
     
     return file
 
-def list_locations(location, destination_type, radius=RADIUS, API_KEY=API_KEY):
+def list_locations(location, destination_type, start_time, radius=RADIUS, API_KEY=API_KEY):
     final_data = []
     if destination_type == "restaurant":
-        print("restaurant boiisss")
         final_data = query_locations(location,destination_type, radius, API_KEY)
-        print("results obtained")
     else:
         final_data += query_locations(location, "activity", radius, API_KEY)
         final_data += query_locations(location, "shop", radius, API_KEY)
         final_data += query_locations(location, "tourist_attraction", radius, API_KEY)
+    
+    for result in final_data:
+        end_location = "place_id:"+result["place_id"]
+        result["travel_info"] = get_time(location, end_location,dept_time=start_time)
 
     return final_data
 
@@ -86,7 +88,9 @@ def get_time(start_loc, end_loc, mode="DRIVING", dept_time="now", API_KEY=API_KE
     returns : None
     """
     start_loc = urllib.parse.quote(start_loc)
-    end_loc = urllib.parse.quote(end_loc)
+    if "place_id:" not in end_loc:
+        end_loc = urllib.parse.quote(end_loc)
+
     url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+start_loc+"&destinations="+end_loc+"&departure_time="+dept_time+"&mode="+mode+"&key="+API_KEY
     file = url_query(url)
     return file
