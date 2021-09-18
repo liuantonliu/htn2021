@@ -18,11 +18,12 @@ def hello():
 def get_locations():
     try:
         print("#######################################")
-        start_time = json.loads(request.args.get("start_time").lower())
-        start_location = json.loads(request.args.get("start_location").lower())
-        end_time = json.loads(request.args.get("end_time").lower())
-        end_location = json.loads(request.args.get("end_location").lower())
-        location_type = json.loads(request.args.get("location_type").lower())
+        print(request.args)
+        start_time = request.args.get("start_time").lower()
+        start_location = request.args.get("start_location").lower()
+        end_time = request.args.get("end_time").lower()
+        end_location = request.args.get("end_location").lower()
+        location_type = request.args.get("location_type").lower()
         print(start_time, start_location, end_time, end_location, location_type)
 
         locationsList = list_locations(start_location, location_type)
