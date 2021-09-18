@@ -4,7 +4,7 @@ import json
 from flask import Flask, jsonify, request
 import time, datetime
 
-from timeline import Timeline
+from maps_api import *
 
 
 app = Flask(__name__)
@@ -15,15 +15,15 @@ def hello():
     # return f"the api key is {os.environ.get('GOOGLE_API_KEY')}"
     return "Goodbye world"
 
-@app.route('/get_timeline', methods=['GET'])
-def get_timeline():
+@app.route('/get_locations', methods=['GET'])
+def get_locations():
     try:
         req = json.loads(request.data.decode(encoding='UTF-8'))
         start_time, start_location, end_time, end_location, location_type = req["start_time"], req["start_location"], req["end_time"], req["end_location"], req["location_type"]
 
-        timelineList = "some magic with your timeline class"
+        locationsList = list_locations(start_location, location_type)
 
-        return jsonify({"timeline": timelineList}), 200
+        return jsonify({"results": locationsList}), 200
     except Exception as e:
         return jsonify({"error": e}), 400
 
