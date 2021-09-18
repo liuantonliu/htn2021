@@ -36,6 +36,7 @@ def url_query(url):
 
 def list_locations(location, destination_type, start_time, radius=RADIUS, API_KEY=API_KEY):
     final_data = []
+    cleaned_data = []
     if destination_type == "restaurant":
         final_data = query_locations(location,destination_type, radius, API_KEY)
     else:
@@ -45,9 +46,17 @@ def list_locations(location, destination_type, start_time, radius=RADIUS, API_KE
     
     for result in final_data:
         end_location = "place_id:"+result["place_id"]
-        result["travel_info"] = get_time(location, end_location,dept_time=start_time)
+        temp = get_time(location, end_location,dept_time=start_time)
+        clean = {"name": result["name"],
+                "place_id": result["place_id"],
+                "rating": result["rating"],
+                "address": temp["destination_addresses"][0],
+                "travel_time": temp["rows"][0]["elements"][0]["duration"]["value"]
+        }
+        cleaned_data.append(clean)
 
-    return final_data
+
+    return cleaned_data
 
 #returns list of nearby locations based on location (lat,lng), radius (m), destination type
 def query_locations(location, destination_type, radius=RADIUS, API_KEY=API_KEY):
