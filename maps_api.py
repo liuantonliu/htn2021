@@ -5,6 +5,7 @@ import urllib.parse
 
 API_KEY = "AIzaSyCDheL3PDqX-t0V1O1W9YWFN7ygpdDH8bk"
 RADIUS = 10000
+QUERY_CAP = 10
 
 # Given an address, convert to lat/long
 # returns a dictionary of {"lat": latidude, "lng": longitude}
@@ -40,7 +41,7 @@ def url_query(url):
     
     return file
 
-def list_locations(location, destination_type, start_time, radius=RADIUS, API_KEY=API_KEY):
+def list_locations(location, destination_type, start_time, radius=RADIUS, API_KEY=API_KEY, QUERY_CAP=QUERY_CAP):
     try:
         final_data = []
         cleaned_data = []
@@ -51,6 +52,8 @@ def list_locations(location, destination_type, start_time, radius=RADIUS, API_KE
             final_data += query_locations(location, "shop", radius, API_KEY)
             final_data += query_locations(location, "tourist_attraction", radius, API_KEY)
         
+        final_data = final_data[:QUERY_CAP]
+
         for result in final_data:
             end_location = "place_id:"+result["place_id"]
             temp = get_time(location, end_location,dept_time=start_time)
