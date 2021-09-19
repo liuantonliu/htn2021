@@ -47,13 +47,18 @@ def list_locations(location, destination_type, start_time, radius=RADIUS, API_KE
     for result in final_data:
         end_location = "place_id:"+result["place_id"]
         temp = get_time(location, end_location,dept_time=start_time)
-
+        
+        if "photos" in result:
+            photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&maxheight=800&photoreference="+result["photos"][0]["photo_reference"]+"&key="+API_KEY
+        else:
+            photo_url = None
+            
         clean = {"name": result["name"],
                 "place_id": result["place_id"],
                 "rating": result["rating"],
                 "address": temp["destination_addresses"],
                 "travel_time": temp["rows"][0]["elements"][0]["duration"]["value"], 
-                "photo_url": "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&maxheight=800&photoreference="+result["photos"][0]["photo_reference"]+"&key="+API_KEY
+                "photo_url": photo_url
         }
         cleaned_data.append(clean)
     return cleaned_data
