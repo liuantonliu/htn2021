@@ -35,10 +35,11 @@ def get_locations():
 @app.route('/get_duration', methods=['GET'])
 def get_duration():
     try:
-        req = json.loads(request.data.decode(encoding='UTF-8'))
-        start_time, start_location, end_location = req["start_time"], req["start_location"], req["end_location"]
+        start_time = request.args.get("start_time").lower()
+        start_location = request.args.get("start_location").lower()
+        end_location = request.args.get("end_location").lower()
 
-        duration = get_time(start_location, end_location, dept_time="start_time")
+        duration = get_time(start_location, end_location, dept_time=start_time)
 
 
         return jsonify({"results": duration}), 200
