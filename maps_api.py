@@ -50,7 +50,7 @@ def list_locations(location, destination_type, start_time, radius=RADIUS, API_KE
         clean = {"name": result["name"],
                 "place_id": result["place_id"],
                 "rating": result["rating"],
-                "address": temp["destination_addresses"][0],
+                "address": temp["destination_addresses"],
                 "travel_time": temp["rows"][0]["elements"][0]["duration"]["value"]
         }
         cleaned_data.append(clean)
