@@ -49,8 +49,8 @@ def list_locations(location, destination_type, start_time, radius=RADIUS, API_KE
             final_data = query_locations(location,destination_type, radius, API_KEY)
         else:
             final_data += query_locations(location, "activity", radius, API_KEY)
-            final_data += query_locations(location, "shop", radius, API_KEY)
-            final_data += query_locations(location, "tourist_attraction", radius, API_KEY)
+            # final_data += query_locations(location, "shop", radius, API_KEY)
+            # final_data += query_locations(location, "tourist_attraction", radius, API_KEY)
         
         final_data = final_data[:QUERY_CAP]
 
@@ -91,13 +91,14 @@ def query_locations(location, destination_type, radius=RADIUS, API_KEY=API_KEY):
             results = file["results"]
             final_data = final_data + results
             
-            time.sleep(5)
+            #time.sleep(5)
 
-            if 'next_page_token' in file:
-                next_page_token = file['next_page_token']
-                url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key='+str(API_KEY)+'&pagetoken='+str(next_page_token)
-            else:
-                next_page = False
+            next_page=False
+            # if 'next_page_token' in file:
+            #     next_page_token = file['next_page_token']
+            #     url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key='+str(API_KEY)+'&pagetoken='+str(next_page_token)
+            # else:
+            #     next_page = False
 
     except Exception as e:
         return """
