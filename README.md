@@ -1,4 +1,4 @@
-# htn2021
+# Hidden Gem - Hack the North 2021
 
 ## Run hidden gem backend on your local machine
 
