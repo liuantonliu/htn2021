@@ -52,7 +52,12 @@ def list_locations(location, destination_type, start_time, radius=RADIUS, API_KE
             # final_data += query_locations(location, "shop", radius, API_KEY)
             # final_data += query_locations(location, "tourist_attraction", radius, API_KEY)
         
-        final_data = final_data[:QUERY_CAP]
+        if len(final_data) > QUERY_CAP:
+            limit = QUERY_CAP
+        else:
+            limit= len(final_data)
+            
+        final_data = final_data[:limit]
 
         for result in final_data:
             end_location = "place_id:"+result["place_id"]
