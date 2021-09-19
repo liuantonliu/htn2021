@@ -1,4 +1,5 @@
 # Hidden Gem - Hack the North 2021
+Check out the [devpost](https://devpost.com/software/hidden-gem)! 
 
 ## Run hidden gem backend on your local machine
 
